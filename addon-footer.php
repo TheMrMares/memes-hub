@@ -1,3 +1,3 @@
 <footer class="row footer">
-    footer
+    <h1>Site footer</h1>
 </footer>

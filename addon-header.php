@@ -7,8 +7,6 @@
         <ul>
             <li><a>Topka</a></li>
             <li><a>Najnowsze</a></li>
-            <li><a>Item list</a></li>
-            <li><a>Item list</a></li>
         </ul>
     </nav>
 </header>
