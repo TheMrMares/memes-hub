@@ -41,7 +41,7 @@ input[type=submit]{
         color: $veryfair;
     }
 }
-input[type=text], input[type=password]{
+input[type=text], input[type=password], input[type=email]{
     -webkit-appearance: none;
     appearance: none;
     font-family: 'Roboto Condensed', sans-serif;
@@ -138,7 +138,7 @@ input:focus {
             margin-top: 5px;
             font-size: 1em;
         }
-        input[type=text], input[type=password] {
+        input[type=text], input[type=password], input[type=email] {
             margin-top: 5px;
             &:focus{
                 border: 1px solid $special;

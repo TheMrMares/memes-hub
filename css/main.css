@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
-input[type=submit], input[type=text], input[type=password], .main .login, .main .register, .main .meme {
+input[type=submit], input[type=text], input[type=password], input[type=email], .main .login, .main .register, .main .meme {
   border: 1px solid #eeeeee;
   border-radius: 10px; }
 
@@ -43,7 +43,7 @@ input[type=submit] {
     background: #4286f4;
     color: #ffffff; }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   -webkit-appearance: none;
   appearance: none;
   font-family: 'Roboto Condensed', sans-serif;
@@ -119,9 +119,9 @@ input:focus {
   .main .login h2, .main .register h2 {
     margin-top: 5px;
     font-size: 1em; }
-  .main .login input[type=text], .main .login input[type=password], .main .register input[type=text], .main .register input[type=password] {
+  .main .login input[type=text], .main .login input[type=password], .main .login input[type=email], .main .register input[type=text], .main .register input[type=password], .main .register input[type=email] {
     margin-top: 5px; }
-    .main .login input[type=text]:focus, .main .login input[type=password]:focus, .main .register input[type=text]:focus, .main .register input[type=password]:focus {
+    .main .login input[type=text]:focus, .main .login input[type=password]:focus, .main .login input[type=email]:focus, .main .register input[type=text]:focus, .main .register input[type=password]:focus, .main .register input[type=email]:focus {
       border: 1px solid #4286f4; }
   .main .login input[type=submit], .main .register input[type=submit] {
     display: block;
