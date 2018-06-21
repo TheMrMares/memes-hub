@@ -1,12 +1,39 @@
 <!-- Server -->
 <?php
+    require('./fx/fx.php');
     //Login
     if(isset($_POST['login--submit'])){
+        require('./fx/connection.php');
 
+        $login = prepareField($connection,'login--login');
+        $password = prepareField($connection,'login--password');
+        
+        $stmt = mysqli_prepare($connection, "");
+        mysqli_close($connection);
     }
     //Register
     if(isset($_POST['register--submit'])){
+        require('./fx/connection.php');
 
+        $login = prepareField($connection,'register--login');
+        $password = prepareField($connection,'register--password');
+        $repeat_password = prepareField($connection,'register--repeat_password');
+        $email = prepareField($connection,'register--email');
+        $repeat_email = prepareField($connection,'register--repeat_email');
+        if($password != $repeat_password || $email != $repeat_email){
+            if($password != $repeat_password){
+                $ERROR_NEGATIVE .= 'Hasła się nie zgadzają. ';
+            } else {
+                $ERROR_NEGATIVE .= 'Emaile się nie zgadzają. ';
+            }
+        } else {
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 14]);
+            $stmt = mysqli_prepare($connection, "INSERT INTO users (login, password, email) VALUES(?,?,?)");
+            mysqli_stmt_bind_param($stmt, 'sss', $login,$hashedPassword,$email);
+            mysqli_stmt_execute($stmt);
+            $ERROR_POSITIVE .= 'Pomyślnie zarejestrowano. ';
+        }
+        mysqli_close($connection);
     }
 ?>
 <!-- Client -->
@@ -19,6 +46,10 @@
     <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
+    <!-- Error bar -->
+    <?php
+        require('addon-error_bar.php');
+    ?>
     <!-- Header -->
     <?php
         require('addon-header.php');
@@ -89,7 +120,7 @@
                         <h2>Email</h2>
                         <input type="text" name="register--email" placeholder="Twój email"/>
                         <h2>Powtórz email</h2>
-                        <input type="text" name="register--email_repeat" placeholder="Powtórz twój email"/>
+                        <input type="text" name="register--repeat_email" placeholder="Powtórz twój email"/>
                         <input type="submit" name="register--submit" value="Zarejestruj się"/>
                         <p>Rejestrując się akceptujesz regulamin serwisu.</p>
                     </form>

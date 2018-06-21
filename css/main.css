@@ -52,6 +52,22 @@ input[type=text], input[type=password] {
 input:focus {
   outline: none; }
 
+.error {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100000;
+  background: rgba(238, 238, 238, 0.4);
+  text-align: center; }
+  .error .error_positive, .error .error_negative {
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline; }
+  .error .error_positive {
+    color: #338c2a; }
+  .error .error_negative {
+    color: #8c2a2a; }
+
 .header .logotype {
   background: #ffffff;
   text-align: center; }

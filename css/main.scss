@@ -52,6 +52,25 @@ input:focus {
     outline: none;
 }
 //Special
+.error {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100000;
+    background: rgba($fair,0.4);
+    text-align: center;
+    .error_positive, .error_negative {
+        font-weight: bold;
+        text-transform: uppercase;
+        display: inline;
+    }
+    .error_positive {
+        color: $positive;
+    }
+    .error_negative {
+        color: $negative;
+    }
+}
 .header {
     .logotype {
         background: $veryfair;
@@ -102,7 +121,6 @@ input:focus {
     > .row:nth-of-type(2) {
         width: 60%;
     }
-
     .login, .register {
         float: left;
         width: 80%;
