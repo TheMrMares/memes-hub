@@ -5,8 +5,13 @@
     </div>
     <nav class="row navigation">
         <ul>
-            <li><a>Topka</a></li>
-            <li><a>Najnowsze</a></li>
+            <li><a href="index.php">Topka</a></li>
+            <li><a href="index.php">Najnowsze</a></li>
+            <?php
+                if(msCheck()){
+                    echo '<li class="navigation--right"><a href="add.php">Dodaj mema</a></li>';
+                }
+            ?>
         </ul>
     </nav>
 </header>

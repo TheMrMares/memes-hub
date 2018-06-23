@@ -90,6 +90,9 @@ input:focus {
             height: 100%;
             z-index: -2;
         }
+        .navigation--right {
+            float: right !important;
+        }
         ul {
             width: 50%;
             margin: 0px 0px 0px 25%;
@@ -107,6 +110,8 @@ input:focus {
             padding: 14px 16px;
             border: 1px solid $fair;
             border-radius: 10px;
+            color: $dark;
+            text-decoration: none;
             &:hover{
                 border: 1px solid $special;
                 color: $special;
@@ -145,6 +150,9 @@ input:focus {
             margin-top: 5px;
             font-size: 1em;
         }
+        input[type=submit]{
+            margin-top: 10px;
+        }
     }
     .login, .register {
         float: left;
@@ -177,6 +185,32 @@ input:focus {
             margin: 5px;
             padding: 0;
             font-size: 0.9em;
+        }
+    }
+    .add_meme{
+        float: left;
+        width: 80%;
+        margin: 20px 10% 20px 10%;
+        @extend %bordered;
+        transition: 0.25s ease;
+        padding: 10px;
+        &:hover {
+            border: 1px solid $special;
+        }
+        h1,h2 {
+            margin:0;
+            padding:0;
+        }
+        h1 {
+            text-transform: uppercase;
+        }
+        h2 {
+            margin: 10px 0px 5px 0px;
+            font-size: 1em;
+        }
+        input[type=submit]{
+            display: block;
+            margin: 10px auto 0px auto;
         }
     }
     .meme {

@@ -1,7 +1,7 @@
 <!-- register -->
 <div class="register">
     <form method="post" action="index.php">
-        <h1>zaloguj się</h1>
+        <h1>zarejestruj się</h1>
         <h2>Login</h2>
         <input type="text" name="register--login" placeholder="Twój login"/>
         <h2>Hasło</h2>

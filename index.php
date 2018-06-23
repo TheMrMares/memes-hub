@@ -1,6 +1,6 @@
 <!-- Server -->
 <?php
-    require('./fx/fx.php');
+    require_once('./fx/fx.php');
     //Login
     if(isset($_POST['login--submit'])){
         require('./fx/connection.php');
@@ -14,6 +14,7 @@
         $query = mysqli_stmt_get_result($stmt);
         if($query && mysqli_num_rows($query) > 0){
             while($row = mysqli_fetch_assoc($query)) {
+                $dbUid = $row['id'];
                 $dbLogin = $row['login'];
                 $dbPassword = $row['password'];
                 $dbEmail = $row['email'];
@@ -26,6 +27,7 @@
                 $ERROR_NEGATIVE = 'Twoje konto nie zostało aktywowane!';
             } else {
                 session_start();
+                $_SESSION['uid'] = $dbUid;
                 $_SESSION['login'] = $dbLogin;
                 $_SESSION['password'] = $dbPassword;
                 $_SESSION['email'] = $dbEmail;
