@@ -12,7 +12,12 @@
 
         $title = prepareField($connection,'add--title');
         $description = prepareField($connection,'add--description');
-
+        if(empty($title)){
+            $title = 'Leniwy autor nie wpisał tytułu.';
+        }
+        if(empty($description)){
+            $description = 'Leniwy autor nie ustawił opisu';
+        }
         $stmt = mysqli_prepare($connection, "INSERT INTO memes (user_id, title, description) VALUES(?,?,?)");
         mysqli_stmt_bind_param($stmt, 'iss', $_SESSION['uid'],$title, $description);
         mysqli_stmt_execute($stmt);
@@ -42,11 +47,17 @@
                         }
                 }
             }
+
+            $fullpath = $path.$name;
+            $stmt = mysqli_prepare($connection, "UPDATE memes SET path=? WHERE id=? ");
+            mysqli_stmt_bind_param($stmt, 'ss', $fullpath, $insertedId);
+            mysqli_stmt_execute($stmt);
+            
+        } else {
+            $stmt = mysqli_prepare($connection, "DELETE FROM memes WHERE id=?");
+            mysqli_stmt_bind_param($stmt, 's', $insertedId);
+            mysqli_stmt_execute($stmt);
         }
-        $fullpath = $path.$name;
-        $stmt = mysqli_prepare($connection, "UPDATE memes SET path=? WHERE id=? ");
-        mysqli_stmt_bind_param($stmt, 'ss', $fullpath, $insertedId);
-        mysqli_stmt_execute($stmt);
 
         mysqli_close($connection);
     }
