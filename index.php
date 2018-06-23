@@ -17,14 +17,19 @@
                 $dbLogin = $row['login'];
                 $dbPassword = $row['password'];
                 $dbEmail = $row['email'];
+                $dbActivated = $row['activated'];
             }
         }
+        
         if(password_verify($password, $dbPassword)){
-            session_start();
-            echo session_id();
-            $_SESSION['login'] = $dbLogin;
-            $_SESSION['password'] = $dbPassword;
-            $_SESSION['email'] = $dbEmail;
+            if(!$dbActivated){
+                $ERROR_NEGATIVE = 'Twoje konto nie zostało aktywowane!';
+            } else {
+                session_start();
+                $_SESSION['login'] = $dbLogin;
+                $_SESSION['password'] = $dbPassword;
+                $_SESSION['email'] = $dbEmail;
+            }
         }
         mysqli_close($connection);
     }
@@ -65,11 +70,29 @@
             } else if($isEmail != 0){
                 $ERROR_NEGATIVE = 'Ten email jest już w użyciu. ';
             } else {
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 14]);
-                $stmt = mysqli_prepare($connection, "INSERT INTO users (login, password, email) VALUES(?,?,?)");
-                mysqli_stmt_bind_param($stmt, 'sss', $login,$hashedPassword,$email);
-                mysqli_stmt_execute($stmt);
-                $ERROR_POSITIVE = 'Pomyślnie zarejestrowano. ';
+                $activationString = mt_rand(10000,99999).time().$login.$email;
+                $activationHash = password_hash($activationString, PASSWORD_BCRYPT, ['cost' => 12]);;
+                $activationLink = 'http://localhost/memes-hub/verification.php?verify='.$activationHash.'&email='.$email;
+                $mail_target = 'For.Each.Mee@gmail.com';
+                $mail_topic = 'MEMES-HUB || Potwierdzenie uworzenia konta!';
+                $mail_text = '
+                Twoje konto na stronie MEMES-HUB zostało utworzone.
+
+                == Aktywacja konta (kliknij link): '.$activationLink.'
+
+                Wiadomośc wygenerowana automatycznie, nie odpowiadaj na nią.
+                ';
+                $mail_headers = 'Content-type:text/html; charset=UTF-8' . '\r\n';
+                $tmp = mail($mail_target, $mail_topic, nl2br($mail_text), $mail_headers);
+                if($tmp){
+                    $hashedPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 14]);
+                    $stmt = mysqli_prepare($connection, "INSERT INTO users (login, password, email, activation_code) VALUES(?,?,?,?)");
+                    mysqli_stmt_bind_param($stmt, 'ssss', $login,$hashedPassword,$email, $activationString);
+                    mysqli_stmt_execute($stmt);
+                    $ERROR_POSITIVE = 'Pomyślnie zarejestrowano. Aktywuj swoje konto za pomocą linku wysłanego na maila. ';
+                } else {
+                    $ERROR_NEGATIVE = 'Coś poszło nie tak, mail aktywacyjny nie mógł zostać wysłany więc konto nie zostało utworzone.';
+                }
             }
         }
         mysqli_close($connection);
@@ -135,35 +158,15 @@
             </div>
             <!-- Right spacer -->
             <div class="row">
-                <!-- Login -->
-                <div class="login">
-                    <form method="post" action="index.php">
-                        <h1>zaloguj się</h1>
-                        <h2>Login</h2>
-                        <input type="text" name="login--login" placeholder="Twój login"/>
-                        <h2>Hasło</h2>
-                        <input type="password" name="login--password" placeholder="Twoje hasło"/>
-                        <input type="submit" name="login--submit" value="Zaloguj się"/>
-                    </form>
-                </div>
-                <!-- register -->
-                <div class="register">
-                    <form method="post" action="index.php">
-                        <h1>zaloguj się</h1>
-                        <h2>Login</h2>
-                        <input type="text" name="register--login" placeholder="Twój login"/>
-                        <h2>Hasło</h2>
-                        <input type="password" name="register--password" placeholder="Twoje hasło"/>
-                        <h2>Hasło</h2>
-                        <input type="password" name="register--repeat_password" placeholder="Powtórz twoje hasło"/>
-                        <h2>Email</h2>
-                        <input type="email" name="register--email" placeholder="Twój email"/>
-                        <h2>Powtórz email</h2>
-                        <input type="text" name="register--repeat_email" placeholder="Powtórz twój email"/>
-                        <input type="submit" name="register--submit" value="Zarejestruj się"/>
-                        <p>Rejestrując się akceptujesz regulamin serwisu.</p>
-                    </form>
-                </div>
+                <?php
+                if(!msCheck()){
+                    include_once('addon-login.php');
+                    include_once('addon-register.php');
+                }
+                if(msCheck()){
+                    include_once('addon-profile.php');
+                }
+                ?>
             </div>
         </section>
     <!-- Footer -->

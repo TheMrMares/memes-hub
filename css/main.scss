@@ -57,7 +57,7 @@ input:focus {
     top: 0;
     width: 100%;
     z-index: 100000;
-    background: rgba($fair,0.4);
+    background: rgba($fair,0.6);
     text-align: center;
     .error_positive, .error_negative {
         font-weight: bold;
@@ -120,6 +120,31 @@ input:focus {
     }
     > .row:nth-of-type(2) {
         width: 60%;
+    }
+    > .row:nth-of-type(3) {
+        position: fixed;
+        right: 0;
+    }
+    .profile {
+        float: left;
+        width: 80%;
+        @extend %bordered;
+        padding: 10px 10px 0px 10px;
+        margin-top: 10px;
+        h1,h2 {
+            padding: 0px;
+            margin: 0px;
+            span {
+                color: $smooth;
+            }
+        }
+        h1 {
+            text-transform: uppercase;
+        }
+        h2 {
+            margin-top: 5px;
+            font-size: 1em;
+        }
     }
     .login, .register {
         float: left;
