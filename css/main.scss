@@ -93,6 +93,10 @@ input:focus {
         .navigation--right {
             float: right !important;
         }
+        .navigation--active {
+            border: 1px solid $special;
+            color: $special;
+        }
         ul {
             width: 50%;
             margin: 0px 0px 0px 25%;
@@ -223,6 +227,12 @@ input:focus {
             border: 1px solid $special;
         }
     }
+    .meme_description {
+        p {
+            margin: 0;
+            padding: 0px 20px;
+        }
+    }
     .meme_title {
         h1 {
             text-align: left;
@@ -257,6 +267,9 @@ input:focus {
         padding: 20px 0px;
         border-radius: 10px;
         text-align: center;
+        form {
+            display: inline;
+        }
         h1, button {
             display: inline;
             margin: 0px 5px;

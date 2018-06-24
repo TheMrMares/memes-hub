@@ -53,11 +53,14 @@
             mysqli_stmt_bind_param($stmt, 'ss', $fullpath, $insertedId);
             mysqli_stmt_execute($stmt);
             
-        } else {
+        }
+        if(!file_exists($path.$name)){
             $stmt = mysqli_prepare($connection, "DELETE FROM memes WHERE id=?");
             mysqli_stmt_bind_param($stmt, 's', $insertedId);
             mysqli_stmt_execute($stmt);
         }
+            
+        
 
         mysqli_close($connection);
     }

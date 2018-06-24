@@ -126,36 +126,42 @@
             </div>
             <!-- Memes -->
             <div class="row">
-                <div class="meme">
-                    <div class="row meme_title">
-                        <h1>Meme title</h1>
-                    </div>
-                    <div class="row meme_image">
-                        <img src="./media/images/fluffy.jpg"/>
-                    </div>
-                    <div class="row meme_info">
-                        <h2>Dodane przez: User</h2>
-                        <h2>Data: 05.23.2018 r.</h2>
-                    </div>
-                </div>
+                <?php
+                    require('./fx/connection.php');
 
-                <div class="meme">
-                    <div class="row meme_title">
-                        <h1>Meme title</h1>
-                    </div>
-                    <div class="row meme_image">
-                        <img src="./media/images/fluffy.jpg"/>
-                    </div>
-                    <div class="row meme_info">
-                        <h2>Dodane przez: User</h2>
-                        <h2>Data: 05.23.2018 r.</h2>
-                    </div>
-                </div>
+                    if(isset($_GET['page'])){
+                        $page = $_GET['page'];
+                    } else {
+                        $page = 1;
+                    }
+                    $perPage = 2;
+
+                    $stmt = mysqli_prepare($connection, "SELECT memes.*, users.login AS ulogin FROM memes INNER JOIN users ON memes.user_id = users.id ORDER BY memes.created DESC");
+                    mysqli_stmt_execute($stmt);
+
+                    $query = mysqli_stmt_get_result($stmt);
+
+                    if($query && mysqli_num_rows($query) > 0){
+                        $counter = 0;
+                        while($row = mysqli_fetch_assoc($query)) {
+                            if($counter >= ($page-1)*$perPage && $counter < ($page-1)*$perPage + $perPage){
+                                include('./addon-meme.php');
+                            }
+                            $counter++;
+                        }
+                    }
+
+                    mysqli_close($connection);
+                ?>
 
                 <div class="sites">
-                    <button>Poprzednia strona</button>
-                    <h1>33</h1>
-                    <button>Następna strona</button>
+                    <form method="post" action="index.php?page=<?php echo $page+1;?>">
+                        <button>Poprzednia strona</button>
+                    </form>
+                    <h1><?php echo $page;?></h1>
+                    <form method="post" action="index.php?page=<?php echo $page+1;?>">
+                        <button>Następna strona</button>
+                    </form>
                 </div>
             </div>
             <!-- Right spacer -->
