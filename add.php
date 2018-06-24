@@ -8,61 +8,7 @@
 
     //Add
     if(isset($_POST['add--submit'])){
-        require('./fx/connection.php');
-
-        $title = prepareField($connection,'add--title');
-        $description = prepareField($connection,'add--description');
-        if(empty($title)){
-            $title = 'Leniwy autor nie wpisał tytułu.';
-        }
-        if(empty($description)){
-            $description = 'Leniwy autor nie ustawił opisu';
-        }
-        $stmt = mysqli_prepare($connection, "INSERT INTO memes (user_id, title, description) VALUES(?,?,?)");
-        mysqli_stmt_bind_param($stmt, 'iss', $_SESSION['uid'],$title, $description);
-        mysqli_stmt_execute($stmt);
-        $insertedId = mysqli_insert_id($connection);
-
-        $structure = './uploads/memes/'.$_SESSION['uid'].'.'.$_SESSION['login'].'/'.$insertedId.'.'.$title.'/';
-
-        if(!empty($_FILES['add--files'])) {   
-            $path = $structure;
-            $max_file_size = 5*1024*1024;
-
-            foreach ($_FILES['add--files']['name'] as $f => $name) {
-                if ($_FILES['add--files']['error'][$f] == 4) {
-                        continue;
-                }
-                if ($_FILES['add--files']['error'][$f] == 0) {
-                        if ($_FILES['add--files']['size'][$f] > $max_file_size) {
-                            $ERROR_NEGATIVE = "Plik $name jest za duży!";
-                            continue;
-                        }
-                        else{
-                            if(!file_exists($structure)){
-                                mkdir($structure, 0777, true);
-                            }
-                            move_uploaded_file($_FILES["add--files"]["tmp_name"][$f], $path.$name);
-                            $ERROR_POSITIVE = 'Plik wysłany pomyślnie.';
-                        }
-                }
-            }
-
-            $fullpath = $path.$name;
-            $stmt = mysqli_prepare($connection, "UPDATE memes SET path=? WHERE id=? ");
-            mysqli_stmt_bind_param($stmt, 'ss', $fullpath, $insertedId);
-            mysqli_stmt_execute($stmt);
-            
-        }
-        if(!file_exists($path.$name)){
-            $stmt = mysqli_prepare($connection, "DELETE FROM memes WHERE id=?");
-            mysqli_stmt_bind_param($stmt, 's', $insertedId);
-            mysqli_stmt_execute($stmt);
-        }
-            
-        
-
-        mysqli_close($connection);
+        sAdd();
     }
     
 ?>
@@ -75,7 +21,7 @@
     <title>Memes Hub</title>
     <link rel="stylesheet" href="./css/main.css">
 </head>
-<body>
+<body p-id="add">
     <!-- Error bar -->
     <?php
         require('addon-error_bar.php');

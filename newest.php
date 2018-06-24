@@ -19,7 +19,7 @@
     <title>Memes Hub</title>
     <link rel="stylesheet" href="./css/main.css">
 </head>
-<body p-id="top">
+<body p-id="newest">
     <!-- Error bar -->
     <?php
         require('addon-error_bar.php');
