@@ -23,6 +23,17 @@
         return $field;
     }
     //Submit
+    function sComment(){
+        require('./fx/connection.php');
+
+        $comment = prepareField($connection, 'comment--comment');
+        
+        $stmt = mysqli_prepare($connection, "INSERT INTO comments (user_id, meme_id, comment) VALUES(?,?,?)");
+        mysqli_stmt_bind_param($stmt, 'iis', $_SESSION['uid'],$_GET['id'], $comment);
+        mysqli_stmt_execute($stmt);
+
+        mysqli_close($connection);
+    }
     function sAdd(){
         require('./fx/connection.php');
 
@@ -182,7 +193,7 @@
         if(session_status() != PHP_SESSION_ACTIVE){
             session_start();
         }
-        if(!isset($_SESSION['login']) || !isset($_SESSION['email']) || !isset($_SESSION['password'])){
+        if(!isset($_SESSION['uid']) || !isset($_SESSION['login']) || !isset($_SESSION['email']) || !isset($_SESSION['password'])){
             return false;
         } else {
             return true;

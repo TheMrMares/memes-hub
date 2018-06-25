@@ -1,7 +1,8 @@
 <!-- Server -->
 <?php
     require_once('./fx/fx.php');
-
+    
+    msCheck();
     if(!msCheck()){
         Header('location: index.php');
     }

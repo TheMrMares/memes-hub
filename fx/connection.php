@@ -12,5 +12,5 @@ if (!$connection) {
     die('Connection error occured: '.mysqli_connect_error());
 }
 mysqli_set_charset($connection, "utf8");
-
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 ?>

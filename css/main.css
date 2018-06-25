@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
-input[type=submit], input[type=text], input[type=password], input[type=email], .main .profile, .main .login, .main .register, .main .add_meme, .main .meme {
+textarea, input[type=submit], input[type=text], input[type=password], input[type=email], .main .profile, .main .login, .main .register, .main .add_meme, .main .meme, .main .comments {
   border: 1px solid #eeeeee;
   border-radius: 10px; }
 
@@ -20,6 +20,13 @@ html, body {
 img {
   max-width: 100%;
   position: relative; }
+
+textarea {
+  font-family: 'Roboto Condensed', sans-serif;
+  padding: 5px; }
+  textarea:focus {
+    outline: none;
+    border: 1px solid #4286f4; }
 
 button {
   font-family: 'Roboto Condensed', sans-serif;
@@ -185,7 +192,8 @@ input:focus {
     border: 1px solid #4286f4; }
 .main .meme_description p {
   margin: 0;
-  padding: 0px 20px; }
+  padding: 0px 20px;
+  text-align: left; }
 .main .meme_title h1 {
   text-align: left;
   margin: 0;
@@ -205,6 +213,43 @@ input:focus {
   text-transform: uppercase;
   font-weight: lighter;
   font-size: 1em; }
+.main .write_comment, .main .comments {
+  float: left;
+  width: 80%;
+  margin: 10px 10% 10px 10%;
+  padding: 0px 10px;
+  border-radius: 10px;
+  text-align: left; }
+  .main .write_comment h1, .main .comments h1 {
+    font-size: 1.3em;
+    text-align: left; }
+  .main .write_comment textarea, .main .comments textarea {
+    resize: none;
+    width: 100%;
+    min-height: 180px;
+    text-align: left; }
+.main .write_comment {
+  text-align: center; }
+  .main .write_comment input[type=submit] {
+    margin: 10px auto 0px auto; }
+.main .comment {
+  padding: 5px;
+  border-bottom: 1px solid #cccccc; }
+  .main .comment .comment_body p {
+    margin: 0;
+    padding: 0;
+    font-size: 1em; }
+    .main .comment .comment_body p span {
+      color: #4286f4;
+      font-weight: bold; }
+  .main .comment .comment_footer h2 {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    float: right;
+    font-size: 0.8em;
+    font-weight: lighter;
+    margin: 0px 10px; }
 .main .sites {
   float: left;
   width: 80%;

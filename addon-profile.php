@@ -2,8 +2,7 @@
 require('./fx/connection.php');
 //Post handler
 if(isset($_POST['logout--submit'])){
-    msStop();
-    Header('location: index.php');
+    sLogout();
 }
 
 //Data loading

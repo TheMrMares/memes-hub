@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 24 Cze 2018, 19:50
+-- Czas generowania: 25 Cze 2018, 04:17
 -- Wersja serwera: 10.1.32-MariaDB
 -- Wersja PHP: 7.2.5
 
@@ -25,6 +25,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `meme_id` int(11) DEFAULT NULL,
+  `comment` text COLLATE utf8_polish_ci,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `comments`
+--
+
+INSERT INTO `comments` (`id`, `user_id`, `meme_id`, `comment`, `created`) VALUES
+(4, 4, 16, 'lool', '2018-06-25 03:58:00'),
+(5, 4, 16, 'O kurcze pieczone :D', '2018-06-25 04:16:40');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `memes`
 --
 
@@ -42,17 +64,7 @@ CREATE TABLE `memes` (
 --
 
 INSERT INTO `memes` (`id`, `user_id`, `title`, `description`, `path`, `created`) VALUES
-(2, 4, '123', '123543535', './uploads/memes/4.user/2.123/3f0710084deef715ad637a6f45691c3b - Copy.jpeg', '2018-06-23 18:27:57'),
-(3, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-23 18:41:33'),
-(4, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-23 18:41:33'),
-(5, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-24 18:28:08'),
-(6, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-24 18:28:12'),
-(7, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-24 18:28:14'),
-(8, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-24 18:28:24'),
-(9, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-24 18:28:27'),
-(10, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-24 18:28:29'),
-(11, 4, 'Nowa dzidka', 'Hejciaaa', './uploads/memes/4.user/3.Nowa dzidka/(m=e-yaaGqaa)(mh=rDVC5C1A9nmKhJ3H)original_326235211.jpg', '2018-06-24 18:28:31'),
-(15, 4, 'aa', 'bbb', './uploads/memes/4.user/15.aa/2955061998463795573.png', '2018-06-24 19:45:38');
+(16, 4, 'Hejciaa', 'tutajjj noo', './uploads/memes/4.user/16.Hejciaa/3f0710084deef715ad637a6f45691c3b - Copy.jpeg', '2018-06-25 03:11:25');
 
 -- --------------------------------------------------------
 
@@ -85,6 +97,14 @@ INSERT INTO `users` (`id`, `login`, `password`, `email`, `activation_code`, `act
 --
 
 --
+-- Indeksy dla tabeli `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `meme_id` (`meme_id`);
+
+--
 -- Indeksy dla tabeli `memes`
 --
 ALTER TABLE `memes`
@@ -102,16 +122,39 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT dla tabeli `memes`
 --
 ALTER TABLE `memes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`meme_id`) REFERENCES `memes` (`id`);
+
+--
+-- Ograniczenia dla tabeli `memes`
+--
+ALTER TABLE `memes`
+  ADD CONSTRAINT `memes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
